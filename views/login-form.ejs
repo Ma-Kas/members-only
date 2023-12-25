@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title><%= title  %></title>
+    <link rel='stylesheet' href='/stylesheets/style.css'/>
+  </head>
+
+  <body class="crt">
+    <header class="header | flex-space">
+      <a href="/">Members Only</a>
+      <div class="current-time"><%= locals.currentTime %></div>
+      <% if (locals.currentUser && currentUser.membership !== 'Guest') { %>
+        <nav class="navbar | flex">
+          <a href="/logout">>Log Out</a>
+        </nav>
+      <% } else if (locals.currentUser) { %>
+          <nav class="navbar | flex">
+            <a href="/upgrade">>Upgrade</a>
+            <a href="/logout">>Log Out</a>
+          </nav>
+      <% } else { %>
+        <nav class="navbar | flex">
+          <a href="/login">>Log In</a>
+          <a href="/sign-up">>Sign Up</a>
+        </nav>
+      <% } %>
+    </header>
+   <div class="main">
+    <p class="section-heading">Fill in your username and password and press enter</p>
+    <br>
+    <form action="" method="post">
+      <div class="form-grid">
+        <label for="username">Username</label>
+        <div class="arrow">===></div>
+        <input type="text" name="username" id="username" class="input-field" autocomplete="off" required>
+        <label for="password">Password</label>
+        <div class="arrow">===></div>
+        <input type="password" name="password" id="password" class="input-field" autocomplete="off" required>
+        <br>
+        <button type="submit" class="btn btn-submit">>Log In</button>
+        <button type="button" class="btn btn-cancel" onclick="window.location='/'" >>Cancel</button>
+      </div>
+    </form>
+    <br>
+    <% if (locals.errors) { %>
+      <p>_____</p>
+      <ul>
+        <% errors.forEach(function(error) { %>
+          <li>ERROR: <%= error.msg %></li>
+        <% }); %>
+      </ul>
+    <% }; %>
+    <% if (locals.messages) { %>
+      <p>_____</p>
+      <ul>
+        <li>ERROR: <%= messages[messages.length - 1] %></li>
+      </ul>
+    <% }; %>
+   </div>
+  </body>
+</html>

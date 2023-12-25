@@ -1,4 +1,5 @@
 const mongoose = require('mongoose');
+const bcrypt = require('bcryptjs');
 
 const Schema = mongoose.Schema;
 
@@ -13,6 +14,21 @@ const UserSchema = new Schema({
     enum: ['Guest', 'Member', 'Admin'],
     default: 'Guest',
   },
+});
+
+// Gets called before save is used
+UserSchema.pre('save', async function (next) {
+  // Only hash if password has changed
+  if (!this.isModified('password')) {
+    return next();
+  }
+  try {
+    this.password = await bcrypt.hash(this.password, 10);
+    return next();
+  } catch (err) {
+    console.log('Something went wrong during hashing');
+    return next(err);
+  }
 });
 
 UserSchema.virtual('fullname').get(function () {

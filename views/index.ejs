@@ -1,11 +1,62 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
   <head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title><%= title %></title>
     <link rel='stylesheet' href='/stylesheets/style.css' />
   </head>
-  <body>
-    <h1><%= title %></h1>
-    <p>Welcome to <%= title %></p>
+
+  <body class="crt">
+    <header class="header | flex-space">
+      <a href="/">Members Only</a>
+      <div class="current-time"><%= locals.currentTime %></div>
+      <% if (locals.currentUser && currentUser.membership !== 'Guest') { %>
+        <nav class="navbar | flex">
+          <a href="/logout">>Log Out</a>
+        </nav>
+      <% } else if (locals.currentUser) { %>
+          <nav class="navbar | flex">
+            <a href="/upgrade">>Upgrade</a>
+            <a href="/logout">>Log Out</a>
+          </nav>
+      <% } else { %>
+        <nav class="navbar | flex">
+          <a href="/login">>Log In</a>
+          <a href="/sign-up">>Sign Up</a>
+        </nav>
+      <% } %>
+    </header>
+    <div class="main">
+      <div class="message-list">
+        <% messageList.forEach((message) => { %>
+          <form action="/" method="post">
+            <div class="message-grid">
+              <p>Title:</p>
+              <p><%= message.title %></p>
+              <p>Message:</p>
+              <p><%= message.message  %></p>
+              <% if (locals.currentUser && currentUser.membership !== 'Guest') { %>
+                <p>Author:</p>
+                <p><%= message.author.username %></p>
+                <p>Posted:</p>
+                <p><%= message.timestamp_formatted %></p>
+              <% } %>
+            </div>
+            <% if (locals.currentUser && currentUser.membership === 'Admin') { %>
+              <input type="hidden" name="messageId" id="messageId" class="input-field" value=<%= message._id  %> >
+              <button type="submit" class="btn btn-submit">>>Delete Message</button>
+            <% } %>
+          </form>
+          <br>
+        <% }); %>
+      </div>
+      <% if (locals.currentUser) { %>
+        <div class="new-message-container">
+          <a href="/create">>New Message</a>
+        </div>
+      <% } %>
+
+    </div>
   </body>
 </html>
