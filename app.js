@@ -32,7 +32,7 @@ app.use(express.static(path.join(__dirname, 'public')));
 
 app.use(
   session({
-    secret: 'kittens',
+    secret: process.env.SERVER_SECRET,
     resave: false,
     saveUninitialized: true,
     cookie: {
