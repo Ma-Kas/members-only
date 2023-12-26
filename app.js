@@ -35,7 +35,10 @@ app.use(
     secret: 'kittens',
     resave: false,
     saveUninitialized: true,
-    cookie: { secure: true },
+    cookie: {
+      secure: false,
+      maxAge: 36000000, //10 hours
+    },
   })
 );
 

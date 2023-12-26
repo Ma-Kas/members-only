@@ -4,12 +4,14 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title><%= title %></title>
-    <link rel='stylesheet' href='/stylesheets/style.css' />
+    <link rel="preload" href="../fonts/VT323-Regular-subset.woff2" as="font" crossorigin="anonymous">
+    <link rel='icon' href='/images/favicon.ico' class='js-favicon'>
+    <link rel='stylesheet' href='/stylesheets/style.css'/>
   </head>
 
   <body class="crt">
     <header class="header | flex-space">
-      <a href="/">Members Only</a>
+      <a href="/">>Message Terminal</a>
       <div class="current-time"><%= locals.currentTime %></div>
       <% if (locals.currentUser && currentUser.membership !== 'Guest') { %>
         <nav class="navbar | flex">
@@ -45,7 +47,7 @@
             </div>
             <% if (locals.currentUser && currentUser.membership === 'Admin') { %>
               <input type="hidden" name="messageId" id="messageId" class="input-field" value=<%= message._id  %> >
-              <button type="submit" class="btn btn-submit">>>Delete Message</button>
+              <button type="submit" class="btn btn-delete">>>Delete Message</button>
             <% } %>
           </form>
           <br>

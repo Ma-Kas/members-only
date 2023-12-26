@@ -19,12 +19,10 @@ exports.create_message_post = [
   body('msg-title')
     .trim()
     .isLength({ min: 1 })
-    .escape()
     .withMessage('A title must be provided.'),
   body('message')
     .trim()
     .isLength({ min: 1 })
-    .escape()
     .withMessage('A message must be provided.'),
   async function (req, res, next) {
     try {

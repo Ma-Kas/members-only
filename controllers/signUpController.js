@@ -1,4 +1,5 @@
 const { body, validationResult } = require('express-validator');
+const passport = require('passport');
 const User = require('../models/user');
 
 // Handle GET form of new user signup
@@ -30,7 +31,8 @@ exports.signup_post = [
     .withMessage('A username is required.')
     .custom(async (value) => {
       const user = await User.find({ username: value });
-      if (user) {
+      console.log(user);
+      if (user.length !== 0) {
         throw new Error('Username already in use.');
       }
     }),
@@ -59,6 +61,8 @@ exports.signup_post = [
         password: req.body.password,
       });
 
+      console.log(newUser);
+
       if (!errors.isEmpty()) {
         // There are errors. Render form again
         res.render('sign-up-form', {
@@ -70,7 +74,11 @@ exports.signup_post = [
       } else {
         // Form data is valid, save new user to database
         await newUser.save();
-        res.redirect('/');
+        passport.authenticate('local', {
+          successRedirect: '/',
+          failureRedirect: '/sign-up',
+          failureMessage: true,
+        })(req, res);
       }
     } catch (err) {
       return next(err);

@@ -1,7 +1,15 @@
-@import url('https://fonts.googleapis.com/css2?family=VT323&display=swap');
+@font-face {
+  font-family: 'VT323';
+  size-adjust: 159%;
+  src: local('VT323-Regular'),
+    url('../fonts/VT323-Regular-subset.woff2') format('woff2');
+  font-weight: normal;
+  font-style: normal;
+  font-display: block;
+}
 
 :root {
-  --ff-main: 'VT323', monospace;
+  --ff-main: 'VT323', 'monospace';
   --clr-bg: #282828;
   --clr-green: #33ff33;
 
@@ -24,9 +32,13 @@ svg {
   background-color: var(--clr-bg);
   color: var(--clr-green);
   font-family: var(--ff-main);
-  font-size: 22px;
+  font-size: max(0.9rem, 1.25vw);
+  line-height: 1.25;
   text-transform: uppercase;
   text-decoration: none;
+  text-rendering: geometricPrecision;
+  font-smooth: never;
+  -webkit-font-smoothing: none;
   margin: 0;
   border: 0;
   padding: 0;
@@ -46,10 +58,11 @@ button {
 }
 
 body {
-  padding: 1rem 2rem;
+  padding: 1.25rem 2.5rem;
 }
 
-input {
+input,
+textarea {
   text-transform: none;
 }
 
@@ -57,13 +70,25 @@ li {
   list-style-type: none;
 }
 
+p {
+  word-break: break-all;
+}
+
 input,
 input:hover,
 input:focus,
-input:active {
+input:active,
+textarea,
+textarea:hover,
+textarea:focus,
+textarea:active {
   background: transparent;
   color: var(--clr-green);
   outline: none;
+}
+
+textarea {
+  resize: none;
 }
 
 button,
@@ -97,21 +122,27 @@ header {
   border-bottom: 1px solid var(--clr-green);
 }
 
+.navbar > a,
+.header > a {
+  padding-left: 1ch;
+  text-indent: -1ch;
+}
+
 /* MAIN STYLING */
 .main {
-  padding: 1rem 0;
+  padding: 2rem 0;
 }
 
 .form-grid {
   display: grid;
   grid-template-columns: [label] max-content [arrow] max-content [input] 1fr;
-  grid-gap: 0 2ch;
+  grid-gap: 0 1ch;
 }
 
 .message-grid {
   display: grid;
   grid-template-columns: max-content 1fr;
-  grid-gap: 0 2ch;
+  grid-gap: 0 1ch;
 }
 
 .new-message-container {
@@ -119,6 +150,11 @@ header {
   justify-content: flex-start;
   padding: 0.5rem 0;
   border-top: 1px solid var(--clr-green);
+}
+
+.input-field {
+  width: 100%;
+  max-width: 100%;
 }
 
 /* Custom Caret Experiment */
@@ -149,6 +185,10 @@ header {
   grid-column-start: 1;
 }
 
+.btn-delete {
+  margin-top: 0.5rem;
+}
+
 /* UTILITY CLASSES */
 .flex {
   display: flex;
@@ -158,6 +198,13 @@ header {
 .flex-space {
   display: flex;
   justify-content: space-between;
+  gap: 1rem;
+}
+
+@media (max-width: 480px) {
+  .form-grid {
+    display: grid;
+  }
 }
 
 /* CRT EFFECT */
@@ -168,7 +215,7 @@ header {
 .crt::before {
   content: ' ';
   display: block;
-  position: absolute;
+  position: fixed;
   top: 0;
   left: 0;
   bottom: 0;
@@ -188,7 +235,7 @@ header {
 .crt::after {
   content: ' ';
   display: block;
-  position: absolute;
+  position: fixed;
   top: 0;
   left: 0;
   bottom: 0;
@@ -200,7 +247,7 @@ header {
   animation: flicker 0.15s infinite;
 }
 
-/* @keyframes flicker {
+@keyframes flicker {
   0% {
     opacity: 0.27861;
   }
@@ -264,7 +311,7 @@ header {
   100% {
     opacity: 0.24387;
   }
-} */
+}
 
 @keyframes textShadow {
   0% {

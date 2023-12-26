@@ -4,11 +4,12 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title><%= title  %></title>
+    <link rel='icon' href='/images/favicon.ico' class='js-favicon'>
     <link rel='stylesheet' href='/stylesheets/style.css'/>
   </head>
   <body class="crt">
     <header class="header | flex-space">
-      <a href="/">Members Only</a>
+      <a href="/">>Message Terminal</a>
       <div class="current-time"><%= locals.currentTime %></div>
       <% if (locals.currentUser && currentUser.membership !== 'Guest') { %>
         <nav class="navbar | flex">
@@ -31,16 +32,17 @@
       <br>
       <form action="" method="post">
         <div class="form-grid">
-          <label for="msg-title">Message Title</label>
+          <label for="msg-title">Title</label>
           <div class="arrow">===></div>
           <input type="text" name="msg-title" id="msg-title" class="input-field" autocomplete="off" required>
           <label for="message">Message</label>
           <div class="arrow">===></div>
-          <input type="text" name="message" id="message" class="input-field" autocomplete="off" required>
+          <textarea name="message" id="message" rows="2" autocomplete="off" required></textarea>
+          <!-- <input type="text" name="message" id="message" class="input-field" autocomplete="off" required> -->
           <input type="hidden" name="author" id="author" class="input-field" required value=<%= locals.currentUser._id  %> >
           <br>
-          <button type="submit" class="btn btn-submit">>Post Message</button>
-          <button type="button" class="btn btn-cancel" onclick="window.location='/'" >>Cancel</button>
+          <button type="submit" class="btn btn-submit">>Submit</button>
+          <button type="button" class="btn btn-cancel" onclick="window.location='/'">>Cancel</button>
         </div>
       </form>
       <br>

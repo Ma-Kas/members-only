@@ -14,7 +14,10 @@ router.get('/', async function (req, res, next) {
     const allMessages = await Message.find({})
       .populate('author', 'username')
       .sort({ timestamp: 1 });
-    res.render('index', { title: 'Members Only', messageList: allMessages });
+    res.render('index', {
+      title: '>Message Terminal',
+      messageList: allMessages,
+    });
   } catch (err) {
     return next(err);
   }
